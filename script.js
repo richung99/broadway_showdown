@@ -545,36 +545,52 @@ class BroadwayRanker {
             rankingsContainer.appendChild(topTenSection);
         }
         
-        // Display Round Winners by Round
-        const roundWinnersSection = document.createElement('div');
-        roundWinnersSection.className = 'results-section';
-        roundWinnersSection.innerHTML = '<h3>📊 Round Winners</h3>';
+        // Display Eliminated Shows by Round (excluding Top 10)
+        const eliminatedSection = document.createElement('div');
+        eliminatedSection.className = 'results-section';
+        eliminatedSection.innerHTML = '<h3>📊 Elimination History</h3>';
+        
+        // Get all shows that made it to Top 10
+        const topTenShows = [...this.finalRankings, ...this.topTen];
+        
+        // Create scrollable container for elimination history
+        const scrollableContainer = document.createElement('div');
+        scrollableContainer.className = 'elimination-scroll-container';
         
         Object.keys(this.roundWinners).sort((a, b) => b - a).forEach(roundNum => {
-            const roundSection = document.createElement('div');
-            roundSection.className = 'round-section';
-            roundSection.innerHTML = `<h4>Round ${roundNum} Winners</h4>`;
+            // Filter out shows that made it to Top 10 (they weren't truly eliminated in earlier rounds)
+            const eliminatedInRound = this.roundWinners[roundNum].filter(show => 
+                !topTenShows.some(topShow => topShow.id === show.id)
+            );
             
-            const winnersGrid = document.createElement('div');
-            winnersGrid.className = 'winners-grid';
-            
-            this.roundWinners[roundNum].forEach(show => {
-                const winnerItem = document.createElement('div');
-                winnerItem.className = 'winner-item';
+            // Only show rounds that actually had eliminations
+            if (eliminatedInRound.length > 0) {
+                const roundSection = document.createElement('div');
+                roundSection.className = 'round-section';
+                roundSection.innerHTML = `<h4>Round ${roundNum} Eliminations</h4>`;
                 
-                winnerItem.innerHTML = `
-                    <img src="${show.image || 'https://via.placeholder.com/60x90/667eea/ffffff?text=No+Image'}" alt="${show.title}" class="winner-poster">
-                    <span class="winner-title">${show.title}</span>
-                `;
+                const eliminatedGrid = document.createElement('div');
+                eliminatedGrid.className = 'winners-grid';
                 
-                winnersGrid.appendChild(winnerItem);
-            });
-            
-            roundSection.appendChild(winnersGrid);
-            roundWinnersSection.appendChild(roundSection);
+                eliminatedInRound.forEach(show => {
+                    const eliminatedItem = document.createElement('div');
+                    eliminatedItem.className = 'winner-item';
+                    
+                    eliminatedItem.innerHTML = `
+                        <img src="${show.image || 'https://via.placeholder.com/60x90/667eea/ffffff?text=No+Image'}" alt="${show.title}" class="winner-poster">
+                        <span class="winner-title">${show.title}</span>
+                    `;
+                    
+                    eliminatedGrid.appendChild(eliminatedItem);
+                });
+                
+                roundSection.appendChild(eliminatedGrid);
+                scrollableContainer.appendChild(roundSection);
+            }
         });
         
-        rankingsContainer.appendChild(roundWinnersSection);
+        eliminatedSection.appendChild(scrollableContainer);
+        rankingsContainer.appendChild(eliminatedSection);
         
         document.getElementById('progressText').textContent = 'Ranking Complete!';
         document.getElementById('progressCount').textContent = `${this.shows.length}/${this.shows.length}`;
