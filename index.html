@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Broadway Showdown | Rank Your Favorite Shows</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <div id="progress" class="progress-container">
+            <div class="progress-info">
+                <span id="progressText" class="progress-text">Round 1</span>
+                <span id="progressCount" class="progress-count">0/80</span>
+            </div>
+            <div class="progress-bar">
+                <div id="progressBar" class="progress-fill"></div>
+            </div>
+        </div>
+
+        <main class="main-content">
+            <!-- Phase 1: Head-to-Head Comparison -->
+            <div id="comparisonPhase" class="phase active">
+                <div class="instructions">
+                    <h2>Which show would you rather see?</h2>
+                    <p>Click on your preferred show. Continue until only 10 shows remain.</p>
+                </div>
+                <div class="show-container">
+                    <div class="show-card" id="showA" data-show-id="">
+                        <div class="poster-container">
+                            <img src="" alt="" class="poster">
+                            <div class="show-overlay">
+                                <div class="show-description"></div>
+                                <div class="hover-instruction">Click to select</div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title"></h3>
+                        </div>
+                    </div>
+                    
+                    <div class="vs-container">
+                        <div class="vs-circle">
+                            <span class="vs-text">VS</span>
+                        </div>
+                    </div>
+                    
+                    <div class="show-card" id="showB" data-show-id="">
+                        <div class="poster-container">
+                            <img src="" alt="" class="poster">
+                            <div class="show-overlay">
+                                <div class="show-description"></div>
+                                <div class="hover-instruction">Click to select</div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title"></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 2: King of the Hill (Top 10) -->
+            <div id="kingOfTheHillPhase" class="phase">
+                <div class="instructions">
+                    <h2>King of the Hill: Defending Champion</h2>
+                    <p>Click on your preferred show. The champion stays until defeated.</p>
+                </div>
+                <div class="show-container">
+                    <div class="show-card champion" id="championShow" data-show-id="">
+                        <div class="champion-badge">👑 Champion</div>
+                        <div class="poster-container">
+                            <img src="" alt="" class="poster">
+                            <div class="show-overlay">
+                                <div class="show-description"></div>
+                                <div class="hover-instruction">Click to keep as champion</div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title"></h3>
+                        </div>
+                    </div>
+                    
+                    <div class="vs-container">
+                        <div class="vs-circle">
+                            <span class="vs-text">VS</span>
+                        </div>
+                    </div>
+                    
+                    <div class="show-card" id="challengerShow" data-show-id="">
+                        <div class="poster-container">
+                            <img src="" alt="" class="poster">
+                            <div class="show-overlay">
+                                <div class="show-description"></div>
+                                <div class="hover-instruction">Click to become new champion</div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title"></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 3: Final Rankings -->
+            <div id="resultsPhase" class="phase">
+                <div class="results-header">
+                    <h2>Your Broadway Show Rankings! 🎉</h2>
+                    <p>Here are your top Broadway shows based on your preferences</p>
+                </div>
+                <div id="finalRankings" class="rankings-grid">
+                    <!-- Rankings will be populated here -->
+                </div>
+                <div class="results-actions">
+                    <button id="restartBtn" class="restart-btn">
+                        <span>🎭 Rank Again</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Transition Overlay -->
+    <div id="transitionOverlay" class="transition-overlay hidden">
+        <div class="transition-message">
+            <h2 id="transitionTitle"></h2>
+            <p id="transitionSubtitle"></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
